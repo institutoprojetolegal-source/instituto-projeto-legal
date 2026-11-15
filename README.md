@@ -48,4 +48,10 @@ Clique em **Login**, selecione `Gui-1`, `Cris-1`, `Haline-1` ou `Usuario-1` e in
 
 O arquivo `.env.example` apenas lista os nomes das configurações futuras. **Não existe backend integrado nesta versão.**
 
-Primeira publicação do Instituto Projeto Legal.
+## Atualização 0.2 — 14/11/2026
+- Página inicial com identidade verde e dourada e fotografia arquitetônica de referência.
+- Login digitado, sem lista suspensa: Gui-1, Cris-1, Haline-1 e Usuario-1. Para demonstração, cada senha é idêntica ao respectivo login.
+- Somente clientes podem abrir novas solicitações. Técnicos consultam a fila e elaboram relatórios.
+- Sete campos independentes e obrigatórios para os documentos PDF.
+- Atenção: demonstração **não segura**. Login validado no navegador; os PDFs não são armazenados, apenas seus nomes; dados ficam no localStorage e não são sincronizados entre dispositivos/usuários. Não utilizar com clientes ou dados reais.
+- Para implantação comercial: autenticação e autorização no servidor, banco de dados, armazenamento seguro dos anexos, proteção de relatórios e integração de pagamentos.
