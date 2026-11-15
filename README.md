@@ -47,3 +47,5 @@ Clique em **Login**, selecione `Gui-1`, `Cris-1`, `Haline-1` ou `Usuario-1` e in
 7. Testes de segurança, backups, monitoramento e política de exclusão.
 
 O arquivo `.env.example` apenas lista os nomes das configurações futuras. **Não existe backend integrado nesta versão.**
+
+Primeira publicação do Instituto Projeto Legal.
