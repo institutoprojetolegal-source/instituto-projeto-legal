@@ -47,7 +47,9 @@ const requiredDocs = [
 export default function Home() {
   const { user: clerkUser, isLoaded, isSignedIn } = useUser();
   const { signOut, openSignUp } = useClerk();
-  const { signIn, setActive, isLoaded: signInLoaded } = useSignIn();
+const { signIn } = useSignIn();
+const signInLoaded = signIn !== null && signIn !== undefined;
+const { setActive } = useClerk();
   const [loginIdentifier, setLoginIdentifier] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginBusy, setLoginBusy] = useState(false);
@@ -418,17 +420,24 @@ export default function Home() {
                   }
                   setLoginBusy(true);
                   try {
-                    const result = await signIn.create({
-                      identifier: loginIdentifier.trim(),
-                      password: loginPassword,
-                    });
-                    if (result.status === 'complete' && result.createdSessionId) {
-                      await setActive({ session: result.createdSessionId });
-                      setLoginPassword('');
-                      nav('dashboard');
-                    } else {
-                      setLoginError('Este acesso requer uma etapa adicional de autenticação. Verifique as configurações do Clerk.');
-                    }
+               const { error } = await signIn.password({
+  identifier: loginIdentifier.trim(),
+  password: loginPassword,
+});
+
+if (error) {
+  throw error;
+}
+
+if (signIn.status === 'complete' && signIn.createdSessionId) {
+  await setActive({ session: signIn.createdSessionId });
+  setLoginPassword('');
+  nav('dashboard');
+} else {
+  setLoginError(
+    'Este acesso requer uma etapa adicional de autenticação. Verifique sua conta.'
+  );
+}
                   } catch (err: unknown) {
                     const clerkError = err as { errors?: Array<{ longMessage?: string; message?: string }> };
                     setLoginError(clerkError?.errors?.[0]?.longMessage || clerkError?.errors?.[0]?.message || 'Não foi possível entrar. Confira suas credenciais.');
