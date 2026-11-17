@@ -1,0 +1,25 @@
+2:"$Sreact.fragment"
+3:"/_next/static/chunks/3qfy96eoyh-ek.js"
+4:"/_next/static/chunks/3xb3f8-g4fc79.js"
+5:"/_next/static/chunks/05ge-xpy6m4_6.js"
+6:I[47257,["$3","$4","$5"],"ClientPageRoot"]
+7:"/_next/static/chunks/0o3n2zq51h15d.js"
+8:I[31713,["$3","$4","$5","$7"],"default"]
+b:I[97367,["$3","$4","$5"],"OutletBoundary"]
+c:"$Sreact.suspense"
+10:"ViewportBoundary"
+11:I[97367,["$3","$4","$5"],"$10"]
+12:"MetadataBoundary"
+13:I[97367,["$3","$4","$5"],"$12"]
+f:X
+1:[["children",{"s":"__PAGE__","h":128,"d":{"r":["$","$2","c",{"children":[["$","$L6",null,{"Component":"$8","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@9","$@a"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/0o3n2zq51h15d.js","async":true}]],["$","$Lb",null,{"children":["$","$c",null,{"name":"Next.MetadataOutlet","children":"$@d"}]}]]}],"p":"$@e","v":null,"s":"$f"}}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L11",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L13",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$c",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Instituto Projeto Legal | Consultoria e Educação"}],["$","meta","1",{"name":"description","content":"Orientação técnica privada e educação em legislação urbana."}]]}]}],null]}],null]}],"p":"$@14","v":null,"s":"$f"}},"a":"$@15","u":"$@16","b":"cPYPlkve98GGZV4ZNvOVN"}
+9:{}
+a:"$1:0:1:d:r:props:children:0:props:serverProvidedParams:params"
+d:null
+16:true
+f:300
+f:C
+15:0
+14:"$undefined"
+e:"$undefined"

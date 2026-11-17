@@ -1,0 +1,25 @@
+{
+  "node": {
+    "0079d1c77367887bb73d3171a46ef562f74a429fe0": {
+      "workers": {
+        "app/page": {
+          "moduleId": 63731,
+          "async": false
+        }
+      },
+      "exportedName": "invalidateCacheAction",
+      "filename": "node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js"
+    },
+    "009f78f487035bc0a3d1ac33600b2bcf5bc3f0441f": {
+      "workers": {
+        "app/page": {
+          "moduleId": 63731,
+          "async": false
+        }
+      },
+      "exportedName": "deleteKeylessAction",
+      "filename": "node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js"
+    }
+  },
+  "edge": {}
+}

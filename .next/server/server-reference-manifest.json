@@ -1,0 +1,34 @@
+{
+  "node": {
+    "0079d1c77367887bb73d3171a46ef562f74a429fe0": {
+      "workers": {
+        "app/_not-found/page": {
+          "moduleId": 9101,
+          "async": false
+        },
+        "app/page": {
+          "moduleId": 63731,
+          "async": false
+        }
+      },
+      "filename": "node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js",
+      "exportedName": "invalidateCacheAction"
+    },
+    "009f78f487035bc0a3d1ac33600b2bcf5bc3f0441f": {
+      "workers": {
+        "app/_not-found/page": {
+          "moduleId": 9101,
+          "async": false
+        },
+        "app/page": {
+          "moduleId": 63731,
+          "async": false
+        }
+      },
+      "filename": "node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js",
+      "exportedName": "deleteKeylessAction"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "7z2j+/mwtDaI7VKln8vMcRe/8JZO5WT29p0yXha1TY4="
+}
