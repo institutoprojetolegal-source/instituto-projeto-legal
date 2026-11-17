@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { SignIn, useClerk, useUser } from '@clerk/nextjs';
+import { useSignIn, useClerk, useUser } from '@clerk/nextjs';
 import {
   ArrowRight, BookOpen, Check, FileText, FolderOpen,
   Menu, Plus, ShieldCheck, UserRound
@@ -46,7 +46,12 @@ const requiredDocs = [
 
 export default function Home() {
   const { user: clerkUser, isLoaded, isSignedIn } = useUser();
-  const { signOut } = useClerk();
+  const { signOut, openSignUp } = useClerk();
+  const { signIn, setActive, isLoaded: signInLoaded } = useSignIn();
+  const [loginIdentifier, setLoginIdentifier] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginBusy, setLoginBusy] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
   const role =
     clerkUser?.publicMetadata?.role === 'tecnico'
@@ -395,105 +400,87 @@ export default function Home() {
               </p>
             </div>
 
-            <div
-              className="login-card"
-              style={{
-                boxSizing: 'border-box',
-                minWidth: 0,
-                overflow: 'hidden'
-              }}
-            >
-              <span className="eyebrow dark">
-                ÁREA RESTRITA
-              </span>
+            <div className="login-card" style={{ boxSizing: 'border-box', minWidth: 0 }}>
+              <span className="eyebrow dark">ÁREA RESTRITA</span>
               <h2>Entrar na plataforma</h2>
-
-              <div
-                style={{
-                  width: '100%',
-                  minWidth: 0,
-                  maxWidth: '100%',
-                  boxSizing: 'border-box',
-                  marginTop: 24
+              <form
+                style={{ display: 'grid', gap: 18, marginTop: 28, width: '100%' }}
+                onSubmit={async (event) => {
+                  event.preventDefault();
+                  setLoginError('');
+                  if (!signInLoaded || !signIn || !setActive) {
+                    setLoginError('A autenticação ainda está carregando. Tente novamente.');
+                    return;
+                  }
+                  if (!loginIdentifier.trim() || !loginPassword) {
+                    setLoginError('Informe seu usuário e sua senha.');
+                    return;
+                  }
+                  setLoginBusy(true);
+                  try {
+                    const result = await signIn.create({
+                      identifier: loginIdentifier.trim(),
+                      password: loginPassword,
+                    });
+                    if (result.status === 'complete' && result.createdSessionId) {
+                      await setActive({ session: result.createdSessionId });
+                      setLoginPassword('');
+                      nav('dashboard');
+                    } else {
+                      setLoginError('Este acesso requer uma etapa adicional de autenticação. Verifique as configurações do Clerk.');
+                    }
+                  } catch (err: unknown) {
+                    const clerkError = err as { errors?: Array<{ longMessage?: string; message?: string }> };
+                    setLoginError(clerkError?.errors?.[0]?.longMessage || clerkError?.errors?.[0]?.message || 'Não foi possível entrar. Confira suas credenciais.');
+                  } finally {
+                    setLoginBusy(false);
+                  }
                 }}
               >
-                <SignIn
-                  routing="hash"
-                  fallbackRedirectUrl="/"
-                  appearance={{
-                    variables: {
-                      colorPrimary: '#07543f',
-                      colorText: '#052f26',
-                      colorBackground: '#ffffff',
-                      colorInputBackground: '#ffffff',
-                      colorInputText: '#052f26',
-                      borderRadius: '10px'
-                    },
-                    elements: {
-                      rootBox: {
-                        width: '100%',
-                        maxWidth: '100%',
-                        minWidth: 0,
-                        margin: 0
-                      },
-                      cardBox: {
-                        width: '100%',
-                        maxWidth: '100%',
-                        minWidth: 0,
-                        boxShadow: 'none',
-                        border: 'none',
-                        margin: 0
-                      },
-                      card: {
-                        width: '100%',
-                        maxWidth: '100%',
-                        minWidth: 0,
-                        boxShadow: 'none',
-                        border: 'none',
-                        padding: 0,
-                        margin: 0,
-                        background: 'transparent'
-                      },
-                      header: {
-                        display: 'none'
-                      },
-                      main: {
-                        width: '100%',
-                        minWidth: 0
-                      },
-                      socialButtonsBlockButton: {
-                        width: '100%',
-                        maxWidth: '100%',
-                        boxSizing: 'border-box'
-                      },
-                      formFieldInput: {
-                        width: '100%',
-                        maxWidth: '100%',
-                        boxSizing: 'border-box',
-                        borderRadius: '10px',
-                        minHeight: '48px'
-                      },
-                      formButtonPrimary: {
-                        width: '100%',
-                        maxWidth: '100%',
-                        backgroundColor: '#07543f',
-                        color: '#ffffff',
-                        minHeight: '48px',
-                        borderRadius: '10px',
-                        boxShadow: 'none'
-                      },
-                      footer: {
-                        width: '100%',
-                        maxWidth: '100%'
-                      }
-                    }
-                  }}
-                />
-              </div>
-
+                <label style={{ display: 'grid', gap: 8, fontWeight: 600 }}>
+                  Usuário ou e-mail
+                  <input
+                    type="text"
+                    autoComplete="username"
+                    value={loginIdentifier}
+                    onChange={event => setLoginIdentifier(event.target.value)}
+                    placeholder="Digite seu usuário"
+                    required
+                    style={{ width: '100%', minWidth: 0, boxSizing: 'border-box', minHeight: 49, padding: '12px 14px', border: '1px solid #cad8d1', borderRadius: 10, background: '#fff', color: '#052f26', fontSize: 15 }}
+                  />
+                </label>
+                <label style={{ display: 'grid', gap: 8, fontWeight: 600 }}>
+                  Senha
+                  <input
+                    type="password"
+                    autoComplete="current-password"
+                    value={loginPassword}
+                    onChange={event => setLoginPassword(event.target.value)}
+                    placeholder="Digite sua senha"
+                    required
+                    style={{ width: '100%', minWidth: 0, boxSizing: 'border-box', minHeight: 49, padding: '12px 14px', border: '1px solid #cad8d1', borderRadius: 10, background: '#fff', color: '#052f26', fontSize: 15 }}
+                  />
+                </label>
+                {loginError && <p role="alert" className="feedback">{loginError}</p>}
+                <button
+                  type="submit"
+                  className="primary"
+                  disabled={loginBusy || !signInLoaded}
+                  style={{ width: '100%', justifyContent: 'center', minHeight: 49, background: '#07543f', color: '#fff', borderRadius: 10 }}
+                >
+                  {loginBusy ? 'Entrando...' : 'Acessar painel'}
+                  <ArrowRight size={17} />
+                </button>
+              </form>
+              <button
+                type="button"
+                onClick={() => openSignUp()}
+                style={{ marginTop: 18, border: 0, background: 'transparent', color: '#07543f', cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                Ainda não tem uma conta? Cadastre-se
+              </button>
               <p className="login-note">
-                Autenticação segura pelo Clerk. O armazenamento
-                de projetos ainda é demonstrativo.
+                Acesso protegido pelo Clerk. Os projetos ainda são armazenados apenas neste navegador, em modo demonstrativo.
               </p>
             </div>
           </div>
