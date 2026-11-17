@@ -46,7 +46,7 @@ const requiredDocs = [
 
 export default function Home() {
   const { user: clerkUser, isLoaded, isSignedIn } = useUser();
-  const { signOut, openSignUp } = useClerk();
+const { signOut, openSignUp, openSignIn } = useClerk();
 const { signIn } = useSignIn();
 const signInLoaded = signIn !== null && signIn !== undefined;
 const { setActive } = useClerk();
@@ -405,6 +405,47 @@ const { setActive } = useClerk();
             <div className="login-card" style={{ boxSizing: 'border-box', minWidth: 0 }}>
               <span className="eyebrow dark">ÁREA RESTRITA</span>
               <h2>Entrar na plataforma</h2>
+              <div style={{ marginTop: 28, marginBottom: 8 }}>
+  <button
+    type="button"
+    onClick={() => openSignIn()}
+    style={{
+      width: '100%',
+      padding: '14px',
+      background: '#ffffff',
+      border: '1px solid #d5ddd8',
+      borderRadius: 10,
+      color: '#183b31',
+      fontSize: 15,
+      fontWeight: 600,
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 12,
+    }}
+  >
+    <span style={{ fontWeight: 800, fontSize: 20, color: '#4285F4' }}>
+      G
+    </span>
+    Continuar com Google
+  </button>
+
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 12,
+      marginTop: 22,
+      color: '#718078',
+      fontSize: 13,
+    }}
+  >
+    <div style={{ flex: 1, height: 1, background: '#dce3de' }} />
+    ou entre com usuário e senha
+    <div style={{ flex: 1, height: 1, background: '#dce3de' }} />
+  </div>
+</div>
               <form
                 style={{ display: 'grid', gap: 18, marginTop: 28, width: '100%' }}
                 onSubmit={async (event) => {
