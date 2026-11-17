@@ -1,0 +1,39 @@
+
+name: Limpeza do Repositorio
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  limpeza:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+
+      - name: Remover arquivos gerados do Git
+        run: |
+          git rm -r --cached --ignore-unmatch \
+            node_modules .next .vscode
+          git rm --cached --ignore-unmatch audit-report.json
+
+      - name: Atualizar gitignore
+        run: |
+          touch .gitignore
+          for item in /node_modules/ /.next/ /.vscode/ /audit-report.json; do
+            grep -qxF "$item" .gitignore || echo "$item" >> .gitignore
+          done
+
+      - name: Salvar limpeza
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Limpa arquivos gerados do repositorio"
+            git push
+          fi

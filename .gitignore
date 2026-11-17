@@ -1,11 +1,8 @@
 
 node_modules/
 .next/
+.vscode/
 .env
 .env.local
 .env.*.local
 audit-report.json
-/node_modules/
-/.next/
-/.vscode/
-/audit-report.json
