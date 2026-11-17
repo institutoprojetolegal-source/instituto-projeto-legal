@@ -16,7 +16,8 @@
     "googleapis": "^155.0.0",
     "jose": "^6.0.0",
     "bcryptjs": "^3.0.2",
-    "@clerk/nextjs": "^6.0.0"
+    "@clerk/nextjs": "^6.0.0",
+    "@clerk/localizations": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^5.8.0",
